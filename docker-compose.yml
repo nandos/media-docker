@@ -8,7 +8,6 @@ services:
       - media
     environment:
       - PLEX_CLAIM="${PLEX_TOKEN}"
-      - ADVERTISE_IP="https://plex.${DOMAIN_NAME}/"
       - PLEX_UID=1000
       - PLEX_GID=1000
     volumes:
