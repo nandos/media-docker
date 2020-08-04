@@ -128,6 +128,29 @@ services:
     depends_on:
       - transmission
 
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: lidarr
+    networks:
+      - media
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/rtc:/dev/rtc:ro
+      - /media/lidarr/config:/config
+      - /media/lidarr/music:/music
+      - /media/transmission/downloads/:/downloads
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=lidarr"
+      - "traefik.frontend.rule=Host:lidarr.${DOMAIN_NAME}"
+      - "traefik.port=8686"
+      - "traefik.docker.network=media"
+    environment:
+      - PUID=1000
+      - PGID=1000
+    depends_on:
+      - transmission
+
   # Proxy to a bunch of public trackers
   jackett:
     image: linuxserver/jackett:latest
